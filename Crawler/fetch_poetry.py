@@ -25,7 +25,10 @@ class Poem:
 def fetch_poetry(baseurl, keyword, poemlist, outfile):
     base_url = baseurl
     bytes_key = keyword.encode('gbk')
-    input_str = '%{0:2X}%{1:2X}'.format(bytes_key[0], bytes_key[1])
+    input_str=''
+    for i in range(len(bytes_key)):
+        input_str = input_str + '%{0:2X}'.format(bytes_key[i])
+    # input_str = '%{0:2X}%{1:2X}'.format(bytes_key[0], bytes_key[1])
 
     # in fisrt page, calc total page num
     page_pattern = re.compile('<A HREF=\'(.*?)\'>(.*?)</A>&nbsp;&nbsp;')
@@ -50,11 +53,11 @@ def fetch_poetry(baseurl, keyword, poemlist, outfile):
                 sc = Poem('','','')
                 sc.name    = s[0]
                 sc.title   = s[1]
-                sc.content = "".join(s[2].split()); #去除回车符
+                sc.content = "".join(s[2].split())   #去除回车符
                 poemlist.append(sc)
                 wstr = s[0]+'\t\t'+s[1]+'\t\t\t\t'+s[2]+'\n'
                 f.write(wstr)
-            time.sleep(2)
+            time.sleep(5)
 
 def analysis_sc(poemlist, outfile, cntfile):
     nlist=[]
@@ -96,7 +99,6 @@ def search_word(word):
     analysis_sc(poemlist, f2, f3)    
 
 if __name__ == "__main__":   
-    search_word('菊')
-    search_word('志')
-
-    search_word('风')
+    search_word('天涯')
+    search_word('明月')
+    search_word('刀')                
